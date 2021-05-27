@@ -14,12 +14,12 @@ mongoose
     useUnifiedTopology: true,
     useNewUrlParser: true,
   })
-  .then((result) => console.log('Connected to DB'))
+  .then((result) =>
+    app.listen(5000, () => {
+      console.log('Server listening on port 5000...!!')
+    })
+  )
   .catch((err) => console.log(err))
 
 // serving routers as middlewares
 app.use('/api/v1/', blogRouters)
-
-app.listen(5000, () => {
-  console.log('Server listening on port 5000...!!')
-})
