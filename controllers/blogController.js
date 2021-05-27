@@ -1,5 +1,11 @@
+const Blog = require('../models/blog') // importing the blog model
+
 const blogHome = (req, res) => {
-  res.status(200).json({ success: true, message: 'Hello world' })
+  Blog.find()
+    .then((result) => {
+      res.send(result)
+    })
+    .catch((err) => console.log(err))
 }
 
 const homePage = (req, res) => {
