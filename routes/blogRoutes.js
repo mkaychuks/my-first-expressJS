@@ -4,6 +4,6 @@ const { blogHome, blogCreate } = require('../controllers/blogController')
 const router = Router()
 
 router.get('/', blogHome) // handling home GET requests
-router.post('/bloghomepage', blogCreate)
+router.post('/blog', blogCreate)
 
 module.exports = router
