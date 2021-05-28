@@ -12,9 +12,9 @@ const blogHome = (req, res) => {
 // creating a new blog in json format
 const blogCreate = (req, res) => {
   const newBlog = new Blog({
-    title: req.params.title,
-    snippet: req.params.snippet,
-    body: req.params.body,
+    title: req.body.title,
+    snippet: req.body.snippet,
+    body: req.body.body,
   })
 
   newBlog
