@@ -1,9 +1,13 @@
 const { Router } = require('express')
-const { blogHome, homePage } = require('../controllers/blogController')
+const express = require('express')
+const { blogHome, blogCreate } = require('../controllers/blogController')
 
 const router = Router()
 
+// setting up the middleware hopefully
+router.use(express.json())
+
 router.get('/', blogHome) // handling home GET requests
-router.get('/bloghomepage', homePage)
+router.post('/blog', blogCreate)
 
 module.exports = router

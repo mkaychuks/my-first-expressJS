@@ -1,5 +1,6 @@
 const Blog = require('../models/blog') // importing the blog model
 
+// pulling the total number of blogs
 const blogHome = (req, res) => {
   Blog.find()
     .then((result) => {
@@ -8,8 +9,22 @@ const blogHome = (req, res) => {
     .catch((err) => console.log(err))
 }
 
-const homePage = (req, res) => {
-  res.status(200).json({ success: true, message: 'Welcome to the whole world' })
+// creating a new blog in json format
+const blogCreate = (req, res) => {
+  const newBlog = new Blog({
+    title: req.params.title,
+    snippet: req.params.snippet,
+    body: req.params.body,
+  })
+
+  newBlog
+    .save()
+    .then((result) => {
+      res.status(201).json({ success: true, data: result })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 }
 
-module.exports = { blogHome, homePage }
+module.exports = { blogHome, blogCreate }
