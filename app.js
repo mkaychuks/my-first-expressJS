@@ -5,9 +5,6 @@ require('dotenv/config')
 
 const app = express() // init express
 
-// setting up middlewares
-app.use(express.json())
-
 // connecting to mongodb using mongoose
 mongoose
   .connect(process.env.DB_CONNECTION, {
