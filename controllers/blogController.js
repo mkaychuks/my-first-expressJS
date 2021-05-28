@@ -4,7 +4,7 @@ const Blog = require('../models/blog') // importing the blog model
 const blogHome = (req, res) => {
   Blog.find()
     .then((result) => {
-      res.send(result)
+      res.status(201).json(result)
     })
     .catch((err) => console.log(err))
 }
