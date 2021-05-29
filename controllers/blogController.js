@@ -36,9 +36,16 @@ const blogSingle = (req, res) => {
     .catch((err) => res.status(404).json({ success: false, message: err }))
 }
 
-// updating or patching up and existing blog post
-const blogUpdate = (req, res) => {
-  Blog.updateOne({ _id: req.params.id })
+// deleting an existing blog post
+const blogDelete = (req, res) => {
+  Blog.findByIdAndDelete({ _id: req.params.id })
+    .then((result) =>
+      res.status(200).json({
+        success: true,
+        message: 'The post has been deleted successfully',
+      })
+    )
+    .catch((err) => res.status(401).json({ success: true, message: err }))
 }
 
-module.exports = { blogHome, blogCreate, blogSingle }
+module.exports = { blogHome, blogCreate, blogSingle, blogDelete }
