@@ -1,5 +1,11 @@
 const Blog = require('../models/blog') // importing the blog model
 
+/* A SIMPLE BLOG API THAT SHOWS THE BASIC CRUD OPERATIONS
+I TOOK THE CONVENTIONAL AND ASYNC-AWAIT ...(STILL IN A DELIMA OF WHICH TO USE AS A BEGINNER)
+THE COMMENTED OUT ARE THE CONTROLLERS WRITTEN WITH CONVENTIONAL JS
+WHILE THE ACTIVE ONES ARE THE ASYNC-AWAIT METHODS OF CONTROLLERS.
+*/
+
 // pulling the total number of blogs
 // const blogHome = (req, res) => {
 //   Blog.find()
