@@ -50,12 +50,21 @@ const blogCreate = async (req, res) => {
 }
 
 // pulling a single blog post
-const blogSingle = (req, res) => {
-  Blog.findById(req.params.id)
-    .then((result) => {
-      res.status(200).json({ success: true, data: result })
-    })
-    .catch((err) => res.status(404).json({ success: false, message: err }))
+// const blogSingle = (req, res) => {
+//   Blog.findById(req.params.id)
+//     .then((result) => {
+//       res.status(200).json({ success: true, data: result })
+//     })
+//     .catch((err) => res.status(404).json({ success: false, message: err }))
+// }
+
+const blogSingle = async (req, res) => {
+  try {
+    const singleBlog = await Blog.findById(req.params.id)
+    res.status(200).json({ success: true, data: singleBlog })
+  } catch (error) {
+    res.status(404).json({ success: false, message: err })
+  }
 }
 
 // deleting an existing blog post
@@ -70,7 +79,6 @@ const blogDelete = (req, res) => {
     .catch((err) => res.status(401).json({ success: true, message: err }))
 }
 
-/* USING A BASIC JS METHOD*/
 // updating an existing blog post
 // const blogUpdate = (req, res) => {
 //   Blog.updateOne(
@@ -93,9 +101,6 @@ const blogDelete = (req, res) => {
 //     .catch((err) => res.status(401).json({ success: false, message: err }))
 // }
 
-/* CONVERTING AND LEARNING ABOUT THE async-await method...
-still getting a lil hold of it 
-*/
 const blogUpdate = async (req, res) => {
   try {
     const updatePost = await Blog.updateOne(
