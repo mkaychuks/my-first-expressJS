@@ -1,30 +1,52 @@
 const Blog = require('../models/blog') // importing the blog model
 
 // pulling the total number of blogs
-const blogHome = (req, res) => {
-  Blog.find()
-    .then((result) => {
-      res.status(200).json({ success: true, data: result })
-    })
-    .catch((err) => console.log(err))
+// const blogHome = (req, res) => {
+//   Blog.find()
+//     .then((result) => {
+//       res.status(200).json({ success: true, data: result })
+//     })
+//     .catch((err) => console.log(err))
+// }
+
+const blogHome = async (req, res) => {
+  try {
+    const blogs = await Blog.find()
+    res.status(200).json({ success: true, data: blogs })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // creating a new blog in json format
-const blogCreate = (req, res) => {
-  const newBlog = new Blog({
-    title: req.body.title,
-    snippet: req.body.snippet,
-    body: req.body.body,
-  })
+// const blogCreate = (req, res) => {
+//   const newBlog = new Blog({
+//     title: req.body.title,
+//     snippet: req.body.snippet,
+//     body: req.body.body,
+//   })
 
-  newBlog
-    .save()
-    .then((result) => {
-      res.status(201).json({ success: true, data: result })
+//   newBlog
+//     .save()
+//     .then((result) => {
+//       res.status(201).json({ success: true, data: result })
+//     })
+//     .catch((err) => {
+//       console.log({ success: false, message: err })
+//     })
+// }
+
+const blogCreate = async (req, res) => {
+  try {
+    const newBlog = await new Blog({
+      title: req.body.title,
+      snippet: req.body.snippet,
+      body: req.body.body,
     })
-    .catch((err) => {
-      console.log({ success: false, message: err })
-    })
+    res.status(201).json({ success: true, data: newBlog })
+  } catch (error) {
+    console.log({ success: false, message: err })
+  }
 }
 
 // pulling a single blog post
@@ -48,7 +70,8 @@ const blogDelete = (req, res) => {
     .catch((err) => res.status(401).json({ success: true, message: err }))
 }
 
-// updating an exisitng blog post
+/* USING A BASIC JS METHOD*/
+// updating an existing blog post
 // const blogUpdate = (req, res) => {
 //   Blog.updateOne(
 //     { _id: req.params.id },
@@ -70,6 +93,9 @@ const blogDelete = (req, res) => {
 //     .catch((err) => res.status(401).json({ success: false, message: err }))
 // }
 
+/* CONVERTING AND LEARNING ABOUT THE async-await method...
+still getting a lil hold of it 
+*/
 const blogUpdate = async (req, res) => {
   try {
     const updatePost = await Blog.updateOne(
