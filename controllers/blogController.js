@@ -38,14 +38,16 @@ const blogHome = async (req, res) => {
 
 const blogCreate = async (req, res) => {
   try {
-    const newBlog = await new Blog({
+    const newBlog = new Blog({
       title: req.body.title,
       snippet: req.body.snippet,
       body: req.body.body,
     })
-    res.status(201).json({ success: true, data: newBlog })
+
+    const saveBlog = await newBlog.save()
+    res.status(201).json({ success: true, data: saveBlog })
   } catch (error) {
-    console.log({ success: false, message: err })
+    console.log({ success: false, message: error })
   }
 }
 
@@ -68,15 +70,28 @@ const blogSingle = async (req, res) => {
 }
 
 // deleting an existing blog post
-const blogDelete = (req, res) => {
-  Blog.findByIdAndDelete({ _id: req.params.id })
-    .then((result) =>
-      res.status(200).json({
-        success: true,
-        message: 'The post has been deleted successfully',
-      })
-    )
-    .catch((err) => res.status(401).json({ success: true, message: err }))
+// const blogDelete = (req, res) => {
+//   Blog.findByIdAndDelete({ _id: req.params.id })
+//     .then((result) =>
+//       res.status(200).json({
+//         success: true,
+//         message: 'The post has been deleted successfully',
+//       })
+//     )
+//     .catch((err) => res.status(401).json({ success: true, message: err }))
+// }
+
+const blogDelete = async (req, res) => {
+  try {
+    const toDelete = await Blog.findByIdAndDelete({ _id: req.params.id })
+    res.status(200).json({
+      success: true,
+      message: 'The post has been deleted successfully',
+      data_removed: toDelete,
+    })
+  } catch (error) {
+    res.status(401).json({ success: true, message: error })
+  }
 }
 
 // updating an existing blog post
