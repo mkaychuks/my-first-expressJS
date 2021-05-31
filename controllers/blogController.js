@@ -48,4 +48,44 @@ const blogDelete = (req, res) => {
     .catch((err) => res.status(401).json({ success: true, message: err }))
 }
 
-module.exports = { blogHome, blogCreate, blogSingle, blogDelete }
+// updating an exisitng blog post
+// const blogUpdate = (req, res) => {
+//   Blog.updateOne(
+//     { _id: req.params.id },
+//     {
+//       $set: {
+//         title: req.body.title,
+//         snippet: req.body.snippet,
+//         body: req.body.body,
+//       },
+//     }
+//   )
+//     .then((result) => {
+//       res.status(201).json({
+//         success: true,
+//         message: 'Successfully Updated',
+//         data: result,
+//       })
+//     })
+//     .catch((err) => res.status(401).json({ success: false, message: err }))
+// }
+
+const blogUpdate = async (req, res) => {
+  try {
+    const updatePost = await Blog.updateOne(
+      { _id: req.params.id },
+      {
+        $set: {
+          title: req.body.title,
+          snippet: req.body.snippet,
+          body: req.body.body,
+        },
+      }
+    )
+    res.json(updatePost)
+  } catch (err) {
+    res.json(err)
+  }
+}
+
+module.exports = { blogHome, blogCreate, blogSingle, blogDelete, blogUpdate }
